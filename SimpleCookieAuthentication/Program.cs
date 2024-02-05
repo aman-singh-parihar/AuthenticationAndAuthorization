@@ -9,19 +9,6 @@ builder.Services.AddAuthentication(options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.SlidingExpiration = true;
     options.AccessDeniedPath = "/Forbidden/";
-})
-.AddJwtBearer("token",options => 
-{
-    var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("SuperSecretKeyForSecuringAllTheImportantEndPoints"));
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = signingKey,
-        ValidateIssuer = true,
-        ValidIssuer = "Issuer",
-        ValidAudience = "Audience",
-        ValidateLifetime = true
-    };
 });
 var app = builder.Build();
 app.UseAuthentication();
